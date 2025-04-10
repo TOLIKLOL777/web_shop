@@ -1,3 +1,5 @@
+import pytest
+
 from src.classes import Product, Category
 from unittest.mock import patch
 
@@ -22,6 +24,8 @@ def test_count_category():
     product4 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
     category1.add_product(product4)
     assert category1.product_count == 4
+    with pytest.raises(TypeError):
+        category1.add_product({})
 
 
 def test_init_product(product):
