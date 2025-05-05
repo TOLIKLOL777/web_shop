@@ -37,7 +37,10 @@ class Product(MixinClass, BaseProduct):
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+        else:
+            self.quantity = quantity
         super().__repr__()
 
     def __str__(self):
@@ -109,6 +112,17 @@ class Category:
         for i in self.__products:
             my_list.append(f"{i.name}, {i.price} руб. Остаток: {i.quantity} шт.\n")
         return my_list
+
+    def middle_price(self):
+        try:
+            prod_count = len(self.__products)
+            summ = 0
+            for i in self.__products:
+                summ += i.price
+
+            return summ / prod_count
+        except:
+            return 0
 
 
 class Smartphone(Product):
